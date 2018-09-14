@@ -4,7 +4,7 @@ $parts = parse_url($_SERVER['REQUEST_URI']);
 parse_str($parts['query'], $query);
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'http://localhost/firstSlim/people/'.$query['id']);
+curl_setopt($ch, CURLOPT_URL, 'http://localhost/interface/sports/'.$query['id']);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 

@@ -1,11 +1,11 @@
 $(document).ready(function() {
   $("#sportsForm").submit(function(event) {
     var form = $(this);
-    console.log($form)
     event.preventDefault();
+    console.log(form.serialize());
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/api/sports/",
+      url: "http://localhost:8080/api/sports/new",
       data: form.serialize(), // serializes the form's elements.
       success: function(data) {
         window.location.replace("http://localhost:8080/interface");
@@ -33,6 +33,7 @@ $(document).ready(function() {
         url: "http://localhost:8080/api/sports/" + iteam,
         success: function(data) {
           alert("Success");
+          location.reload();
         }
       });
     }

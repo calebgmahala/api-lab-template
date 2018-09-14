@@ -102,30 +102,49 @@ class App
        return $response;
      });
      //create sport 
-     $app->post('/sports', function (Request $request, Response $response) {
+     $app->post('/sports/new', function (Request $request, Response $response) {
        $this->logger->addInfo("POST /sports/new");
 
-       // insert query
-       $query = "INSERT INTO sports VALUES (";
-       $fields = $request->getParsedBody();
+         // check that peron exists
+         // $person = $this->db->query('SELECT * from people where id='.$id)->fetch();
+         // if(!$person){
+         //   $errorData = array('status' => 404, 'message' => 'not found');
+         //   $response = $response->withJson($errorData, 404);
+         //   return $response;
+         // }
+
+         // build query string
+         $createString = "INSERT INTO sports ";
+         $fields = $request->getParsedBody();
          $keysArray = array_keys($fields);
          $last_key = end($keysArray);
+         $values = '(';
+         $fieldNames = '(';
          foreach($fields as $field => $value) {
-           $query = $query . "$field = '$value'";
+           $values = $values . "'"."$value"."'";
+           $fieldNames = $fieldNames . "$field";
            if ($field != $last_key) {
              // conditionally add a comma to avoid sql syntax problems
-             $query = $query . ", ";
+             $values = $values . ", ";
+             $fieldNames = $fieldNames . ", ";
            }
          }
-         $query = $query . " )";
-       $createSuccessful = $this->db->exec($query);
-       if($createSuccessful){
-         $response = $response->withStatus(200);
-       } else {
-         $errorData = array('status' => 404, 'message' => 'not found');
-         $response = $response->withJson($errorData, 404);
-       }
-       return $response;
+         $values = $values . ')';
+         $fieldNames = $fieldNames . ') VALUES ';
+         $createString = $createString . $fieldNames . $values . ";";
+         // execute query
+         try {
+           $this->db->exec($createString);
+         } catch (\PDOException $e) {
+           var_dump($e);
+           $errorData = array('status' => 400, 'message' => 'Invalid data provided to create person');
+           return $response->withJson($errorData, 400);
+         }
+         // return updated record
+         $person = $this->db->query('SELECT * from sports ORDER BY id desc LIMIT 1')->fetch();
+         $jsonResponse = $response->withJson($person);
+
+         return $jsonResponse;
      });
 
      $this->app = $app;
