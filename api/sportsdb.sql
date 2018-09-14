@@ -18,6 +18,7 @@
 --
 -- Table structure for table `sports`
 --
+DROP DATABASE IF EXISTS sportsdb;
 CREATE DATABASE sportsdb;
 USE sportsdb;
 DROP TABLE IF EXISTS `sports`;
@@ -26,6 +27,9 @@ DROP TABLE IF EXISTS `sports`;
 CREATE TABLE `sports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `teamsport` boolean NOT NULL,
+  `best_player` varchar(25) DEFAULT NULL,
+  `esport` boolean NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -36,7 +40,7 @@ CREATE TABLE `sports` (
 
 LOCK TABLES `sports` WRITE;
 /*!40000 ALTER TABLE `sports` DISABLE KEYS */;
-INSERT INTO `sports` VALUES (1,'Soccer'),(2,'Football'),(3,'Basketball');
+INSERT INTO `sports` VALUES (1,'Soccer',true,'Pele',false),(2,'Football',true,'Tom Brady',false),(3,'Basketball',true,'Micheal Jordan',false),(4,'CS:GO',true,'Coldzero',true),(5,'Golf',false,'Tiger Woods',false);
 /*!40000 ALTER TABLE `sports` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -26,12 +26,14 @@ class App
          $logger->pushHandler($file_handler);
          return $logger;
      };
+     // get all sports
      $app->get('/sports', function (Request $request, Response $response) {
          $this->logger->addInfo("GET /sports");
          $sports = $this->db->query('SELECT * from sports')->fetchAll();
          $jsonResponse = $response->withJson($sports);
          return $jsonResponse;
      });
+     //get sport by id
      $app->get('/sports/{id}', function (Request $request, Response $response, array $args) {
          $id = $args['id'];
          $this->logger->addInfo("GET /sports/".$id);
@@ -46,6 +48,7 @@ class App
          return $response;
 
      });
+     //edit query
      $app->put('/sports/{id}', function (Request $request, Response $response, array $args) {
          $id = $args['id'];
          $this->logger->addInfo("PUT /sports/".$id);
@@ -85,6 +88,7 @@ class App
 
          return $jsonResponse;
      });
+     //delete sport
      $app->delete('/sports/{id}', function (Request $request, Response $response, array $args) {
        $id = $args['id'];
        $this->logger->addInfo("DELETE /sports/".$id);
@@ -97,10 +101,11 @@ class App
        }
        return $response;
      });
-     $app->create('/sports/new', function (Request $request, Response $response) {
+     //create sport 
+     $app->post('/sports/new', function (Request $request, Response $response) {
        $this->logger->addInfo("POST /sports/new");
 
-       // build query string
+       // insert query
        $query = "INSERT INTO sports VALUES (" . $request->getParsedBody() . ')';
        $createSuccessful = $this->db->exec($query);
        if($createSuccessful){

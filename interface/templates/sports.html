@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+<script src="public/script.js"></script>
+
+<h1><?php echo $title; ?> <a class="btn btn-info" href="http://localhost:8080/interface/sports/add">Add Person</a></h1>
+<table class='table'>
+  <tr><th>Name</th><th>Teamsport</th><th>Best Player</th><th>eSport</th></tr>
+<?php 
+	$tableRows = "";
+	foreach($responseRecords as $sport) {
+    if($sport["teamsport"] == false){
+      $teamsport = "False";
+    } else {
+      $teamsport = "True";
+    }
+    if($sport["esport"] == false){
+      $esport = "False";
+    } else {
+      $esport = "True";
+    }
+      $tableRows = $tableRows . "<tr>";
+    	$tableRows = $tableRows . "<td>".$sport["name"]."</td><td>".$teamsport."</td><td>".$sport["best_player"]."</td><td>".$esport."</td>";
+    	$tableRows = $tableRows . "<td>
+    	<a href='http://localhost:8080/interface/sports/".$sport["id"]."' class='btn btn-primary'>View Details</a>
+    	<a href='http://localhost:8080/interface/sports/".$sport["id"]."/edit' class='btn btn-secondary'>Edit</a>
+    	<a data-id='".$sport["id"]."' class='btn btn-danger deletebtn'>Delete</a></td>";
+    	$tableRows = $tableRows . "</tr>";
+    }
+    echo $tableRows; ?>
+
+</table>
