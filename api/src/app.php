@@ -102,11 +102,22 @@ class App
        return $response;
      });
      //create sport 
-     $app->post('/sports/new', function (Request $request, Response $response) {
+     $app->post('/sports', function (Request $request, Response $response) {
        $this->logger->addInfo("POST /sports/new");
 
        // insert query
-       $query = "INSERT INTO sports VALUES (" . $request->getParsedBody() . ')';
+       $query = "INSERT INTO sports VALUES (";
+       $fields = $request->getParsedBody();
+         $keysArray = array_keys($fields);
+         $last_key = end($keysArray);
+         foreach($fields as $field => $value) {
+           $query = $query . "$field = '$value'";
+           if ($field != $last_key) {
+             // conditionally add a comma to avoid sql syntax problems
+             $query = $query . ", ";
+           }
+         }
+         $query = $query . " )";
        $createSuccessful = $this->db->exec($query);
        if($createSuccessful){
          $response = $response->withStatus(200);
