@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Leafy</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+   <style>#mapid { height: 700px; }</style>
+  </head>
+  <body>
+    <div id="mapid"></div>
+  </body>
+  <script>
+
+    var mymap = L.map('mapid').setView([39.828300, -98.579500], 5);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1IjoiY2FsZWJnbWFoYWxhIiwiYSI6ImNqbWo5aTh2aTBkZGczcHFsYmJlY3dtOXUifQ.isNnTGKjSy18zboAx11FRg'
+    }).addTo(mymap);
+
+    var data = [];
+    $.ajax({
+      type: "GET",
+      url: "https://api.meetup.com/find/events?key=824543b1f66592d5c332155626d6e41&zip=17603&sign=true",
+      crossDomain: true,
+      dataType: "jsonp",
+      success: function (response) {
+        console.log(response);
+        data = response['data'].filter(d=> d['venue'] != undefined);
+        console.log(data);
+        data.forEach((resp)=> {
+          var marker = L.marker([resp['venue']['lat'], resp['venue']['lon']]).addTo(mymap);
+          marker.bindPopup(resp['name']+", "+resp['venue']['address_1']+": "+resp['local_time']).addTo(mymap);
+        });
+      },
+      error: function (xhr, status) {
+        alert("error");
+      }
+    });
+
+  </script>
+</html>
