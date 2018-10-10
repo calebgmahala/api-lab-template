@@ -1,16 +1,16 @@
-# Lab/Assignment
-Create your own Slim API.
+# Flask Demo Project
 
-## Requirements:
-* Database with at least one type of data
-* Full CRUD (create, read, update, delete) endpoints (20 points)
-* Unit Tests for endpoints (20 points)
-* Error handling where needed (5 points)
-* Inline documentation for routes / functions (5 points)
-
-## Bonus Points:
-Bonus points will be awarded if you create your API with more than one data type and endpoint set.
-
-## Submssion instructions:
-* Create a git repository on your github account and send me the link via email.
-* Attach a database export / snapshot to your email.
+## Steps
+* create virtual environment
+```python3 -m venv venv```
+* enable virtual environment
+```. venv/bin/activate```
+* Install Flask
+``` python3 -m pip install -U flask```
+* Build simple flask app
+* run flask
+```
+export FLASK_APP=hello.py
+export FLASK_ENV=development
+flask run
+```
