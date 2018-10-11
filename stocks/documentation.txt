@@ -1,0 +1,26 @@
+1.Discovery/Requirements
+-Stocks data 
+-For a stock investor 
+-Allows investor to make educated decisions on stocks to invest in
+-Display information in readable form
+----
+2.Collection
+-alphavantage.co
+----
+3.Data Prep/Cleaning
+-No holes or missing data
+-Money is in string format to the 4th decimal place
+----
+4.Exploration/Planning
+-Look into the highest selling points of stocks every week to see the trends of the max amount you could have made selling that stock that week
+-Plot them and see the overall curves
+----
+5.Modeling/Algorithms
+-No Formulas needed. A graph will be necessary
+----
+6.Automation/Computation
+-Used Python for data manipulation
+-Using MatPlotLib as the graphing tool along with MPLD3 to transfer the graph to a browser
+----
+7.Findings/Review/Repeat
+-Model turned out good. All I need to do is spice things up it seems
